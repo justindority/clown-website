@@ -7,10 +7,24 @@ const applicationState = {
     completions: []
 }
 
+//function to pull application state into other modules
 export const getApplicationState = () => {
     fetchReservations()
-    return applicationState
+        return {...applicationState}
+        }
+
+//create api call to grab reservations
+export const fetchReservations = () => {
+    return fetch(`${API}/reservations`)
+    .then(response => response.json())
+    .then(
+        (reservations) => {
+            // Store the external state in application state
+            applicationState.reservations = reservations
+        }
+    )
 }
+
 
 //create post api call that will add reservations
 export const sendReservation = (reservation) => {
@@ -30,14 +44,12 @@ export const sendReservation = (reservation) => {
         })
 }
 
-//create api call to grab reservations
-export const fetchReservations = () => {
-    return fetch(`${API}/reservations`)
-        .then(response => response.json())
+//DELETE records
+export const deleteRequest = (id) => {
+    return fetch(`${API}/requests/${id}`, { method: "DELETE" })
         .then(
-            (reservations) => {
-                // Store the external state in application state
-                applicationState.reservations = reservations
+            () => {
+                mainContainer.dispatchEvent(new CustomEvent("stateChanged"))
             }
         )
 }

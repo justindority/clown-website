@@ -5,8 +5,11 @@ import { fetchReservations } from "./dataAccess.js"
 const mainContainer = document.querySelector("#container")
 
 const render = () => {
-    fetchReservations()
-    mainContainer.innerHTML = clownWebsite()
+    fetchReservations().then(
+        () => {
+            mainContainer.innerHTML = clownWebsite()
+        }
+    )
 }
 
 render()

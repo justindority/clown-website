@@ -1,14 +1,14 @@
 import { getApplicationState } from "./dataAccess.js"
 
 //generates html for requests
-export const requestsHtml = () => {
-    let applicationState = getApplicationState()
+export const reservationsHtml = () => {
+   let applicationState = getApplicationState()
 
     let html =  `
         <ul>
             ${
                 applicationState.reservations.map(reservation => {
-                    return `<li class="">${reservation.childName}
+                    return `<li class="reservation">${reservation.childName} (${reservation.parentName}'s child), a ${reservation.partyLength} hour party for ${reservation.attendees} kids on ${reservation.partyDate}
 
                     <button id="request--${reservation.id}">Delete</button></li>`
                 }).join("")
@@ -46,3 +46,14 @@ export const requestsHtml = () => {
 
 //     return html
 // }
+
+
+const mainContainer = document.querySelector("#container")
+
+//click event for deleting requests
+mainContainer.addEventListener("click", click => {
+    if (click.target.id.startsWith("request--")) {
+        const [,requestId] = click.target.id.split("--")
+        deleteRequest(parseInt(requestId))
+    }
+})
