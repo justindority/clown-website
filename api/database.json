@@ -8,8 +8,35 @@
       "address": "4",
       "partyDate": "2022-08-17",
       "partyLength": "3"
+    },
+    {
+      "id": 2,
+      "parentName": "Carmine",
+      "childName": "Karl",
+      "attendees": "500",
+      "address": "2342343",
+      "partyDate": "2029-10-24",
+      "partyLength": "10000"
+    },
+    {
+      "id": 3,
+      "parentName": "Jeremy",
+      "childName": "Jeremy",
+      "attendees": "1",
+      "address": "13",
+      "partyDate": "2022-08-03",
+      "partyLength": "1"
     }
   ],
-  "clowns": [],
+  "clowns": [
+    {
+      "id": 1,
+      "name": "Mike"
+    },
+    {
+      "id": 2,
+      "name": "Leslie"
+    }
+  ],
   "completions": []
 }

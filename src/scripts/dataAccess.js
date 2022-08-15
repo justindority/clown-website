@@ -7,6 +7,8 @@ const applicationState = {
     completions: []
 }
 
+const mainContainer = document.querySelector("#container")
+
 //function to pull application state into other modules
 export const getApplicationState = () => {
     fetchReservations()
@@ -26,6 +28,31 @@ export const fetchReservations = () => {
 }
 
 
+//create api call to grab clowns
+export const fetchClowns = () => {
+    return fetch(`${API}/clowns`)
+    .then(response => response.json())
+    .then(
+        (clouns) => {
+            // Store the external state in application state
+            applicationState.clowns = clouns
+        }
+    )
+}
+
+//create api call to grab completions
+export const fetchCompletions = () => {
+    return fetch(`${API}/completions`)
+    .then(response => response.json())
+    .then(
+        (comp) => {
+            // Store the external state in application state
+            applicationState.completions = comp
+        }
+    )
+}
+
+
 //create post api call that will add reservations
 export const sendReservation = (reservation) => {
     const fetchOptions = {
@@ -40,16 +67,34 @@ export const sendReservation = (reservation) => {
     return fetch(`${API}/reservations`, fetchOptions)
         .then(response => response.json())
         .then(() => {
-            // mainContainer.dispatchEvent(new CustomEvent("stateChanged"))
+            mainContainer.dispatchEvent(new CustomEvent("stateChanged"))
         })
 }
 
 //DELETE records
 export const deleteRequest = (id) => {
-    return fetch(`${API}/requests/${id}`, { method: "DELETE" })
+    return fetch(`${API}/reservations/${id}`, { method: "DELETE" })
         .then(
             () => {
                 mainContainer.dispatchEvent(new CustomEvent("stateChanged"))
             }
         )
+}
+
+//used to save completions to the json database
+export const saveCompletion = (completion) => {
+    const fetchOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(completion)
+    }
+
+
+    return fetch(`${API}/completions`, fetchOptions)
+        .then(response => response.json())
+        .then(() => {
+            mainContainer.dispatchEvent(new CustomEvent("stateChanged"))
+        })
 }

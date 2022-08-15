@@ -1,4 +1,5 @@
-import { getApplicationState } from "./dataAccess.js"
+import { getApplicationState, deleteRequest, saveCompletion } from "./dataAccess.js"
+import { clownCreator } from "./clowns.js"
 
 //generates html for requests
 export const reservationsHtml = () => {
@@ -9,8 +10,8 @@ export const reservationsHtml = () => {
             ${
                 applicationState.reservations.map(reservation => {
                     return `<li class="reservation">${reservation.childName} (${reservation.parentName}'s child), a ${reservation.partyLength} hour party for ${reservation.attendees} kids on ${reservation.partyDate}
-
-                    <button id="request--${reservation.id}">Delete</button></li>`
+                    ${clownCreator(reservation, applicationState)}
+                    <button id="reservationDel--${reservation.id}">Delete</button></li>`
                 }).join("")
             }
 
@@ -52,8 +53,27 @@ const mainContainer = document.querySelector("#container")
 
 //click event for deleting requests
 mainContainer.addEventListener("click", click => {
-    if (click.target.id.startsWith("request--")) {
+    if (click.target.id.startsWith("reservationDel--")) {
         const [,requestId] = click.target.id.split("--")
         deleteRequest(parseInt(requestId))
     }
 })
+
+//click event for completing a reservation
+mainContainer.addEventListener(
+    "change",
+    (event) => {
+        if (event.target.id === "clowns"){
+            const [reservationId, clownId] = event.target.value.split("--")
+            const applicationState = getApplicationState()
+
+            let completionObject = {
+                id: applicationState.completions.length + 1,
+                reservationId: reservationId,
+                clownId: clownId,
+                date_created: Date.now
+            }
+            saveCompletion(completionObject)
+        }
+    }
+)
