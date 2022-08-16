@@ -21,6 +21,14 @@ export const fetchReservations = () => {
     .then(response => response.json())
     .then(
         (reservations) => {
+            for (const reservation of reservations) {
+                reservation.completed = false
+                for (const completion of applicationState.completions) {
+                    if(reservation.id === completion.reservationId){
+                        reservation.completed = true
+                    }
+                }
+            }
             // Store the external state in application state
             applicationState.reservations = reservations
         }

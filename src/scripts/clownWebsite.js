@@ -4,7 +4,7 @@ import { reservationsHtml } from "./reservations.js"
 
 export const clownWebsite = () => {
     return `
-    <h1>Reserve yourself a clown :)</h1>
+    <h1>Reserve yourself a clown for ur party :)</h1>
     <section class="reservationForm">${reservationForm()}
     </section>
 

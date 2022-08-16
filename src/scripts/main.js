@@ -5,9 +5,9 @@ import { fetchClowns, fetchCompletions, fetchReservations } from "./dataAccess.j
 const mainContainer = document.querySelector("#container")
 
 const render = () => {
-    fetchReservations()
+    fetchCompletions()
     .then(() => fetchClowns())
-    .then(() => fetchCompletions())
+    .then(() => fetchReservations())
     .then(
         () => {
             mainContainer.innerHTML = clownWebsite()

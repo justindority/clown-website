@@ -26,6 +26,15 @@
       "address": "13",
       "partyDate": "2022-08-03",
       "partyLength": "1"
+    },
+    {
+      "id": 4,
+      "parentName": "test",
+      "childName": "test",
+      "attendees": "",
+      "address": "334",
+      "partyDate": "3434-03-04",
+      "partyLength": "34"
     }
   ],
   "clowns": [
@@ -38,5 +47,16 @@
       "name": "Leslie"
     }
   ],
-  "completions": []
+  "completions": [
+    {
+      "id": 1,
+      "reservationId": 4,
+      "clownId": 1
+    },
+    {
+      "id": 2,
+      "reservationId": 1,
+      "clownId": 1
+    }
+  ]
 }
